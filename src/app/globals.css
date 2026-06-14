@@ -1,8 +1,25 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-background: var(--dws-color-background);
+  --color-surface: var(--dws-color-surface);
+  --color-surface-muted: var(--dws-color-surface-muted);
+  --color-border: var(--dws-color-border);
+  --color-text: var(--dws-color-text);
+  --color-text-muted: var(--dws-color-text-muted);
+  --color-primary: var(--dws-color-primary);
+  --color-primary-hover: var(--dws-color-primary-hover);
+  --color-accent: var(--dws-color-accent);
+  --color-danger: var(--dws-color-danger);
+  --color-success: var(--dws-color-success);
+  --color-warning: var(--dws-color-warning);
+}
+
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif;
+  background-color: var(--dws-color-background);
+  color: var(--dws-color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
