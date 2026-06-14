@@ -33,11 +33,12 @@ test-results/
 # Supabase local
 .supabase/
 
-# OS / editor
+# OS / editor / local config
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
+.claude/
 *.swp
 
 # TypeScript
