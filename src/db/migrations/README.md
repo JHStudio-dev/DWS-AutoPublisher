@@ -5,6 +5,7 @@ SQL migrations for the Supabase Postgres database, applied in numeric order.
 | File | Purpose |
 |------|---------|
 | `0001_initial_schema.sql` | Enums, tables, indexes, and the `updated_at` trigger |
+| `0002_rls_policies.sql` | `current_company_id()` helper, enables RLS, and company-isolation policies |
 
 ## Applying
 
@@ -13,6 +14,7 @@ Supabase SQL editor or `psql`:
 
 ```bash
 psql "$DATABASE_URL" -f src/db/migrations/0001_initial_schema.sql
+psql "$DATABASE_URL" -f src/db/migrations/0002_rls_policies.sql
 ```
 
 Migrations are written to run once on a fresh database. Re-running them requires
