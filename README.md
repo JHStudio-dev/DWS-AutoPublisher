@@ -37,9 +37,12 @@ internal business tool.
 
 ## Project status
 
-**Phase 0 — Planning & documentation.** No application code yet. This repository
-currently contains the architecture, security, database, theme, workflow, and
-roadmap documentation that the implementation phases will build on.
+**Phase 1 — Foundation & authentication.** The application scaffold is in place:
+Next.js + TypeScript + Tailwind, the Supabase client structure, database
+migrations with Row Level Security, Supabase Auth (login, invite-oriented
+signup, password reset, logout), middleware route protection, the centralized
+theme system, and a protected dashboard shell. Inventory, groups, and
+publication modules arrive in later phases — see [docs/roadmap.md](docs/roadmap.md).
 
 ## Documentation
 
@@ -58,6 +61,41 @@ roadmap documentation that the implementation phases will build on.
 
 ## Getting started
 
-Setup instructions, environment configuration, and scripts will be added in
-**Phase 1** together with the application scaffold. Required environment
-variables are documented in [.env.example](.env.example).
+### Requirements
+
+- Node.js 20+
+- A Supabase project (Postgres, Auth)
+
+### Setup
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Configure environment variables. Copy the template and fill in your Supabase
+   values (never commit the result):
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Required variables are documented in [.env.example](.env.example). The
+   service role key is server-side only and must never be exposed to the browser.
+
+3. Apply the database migrations in order against your Supabase database (see
+   [src/db/migrations/README.md](src/db/migrations/README.md)), then create the
+   owner user in Supabase Auth and link their profile as described in the seed.
+
+### Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start the development server |
+| `npm run build` | Production build |
+| `npm run start` | Run the production build |
+| `npm run lint` | Lint the project |
+| `npm run typecheck` | Type-check without emitting |
+
+> A test runner is not configured yet; it is planned for a later phase.
