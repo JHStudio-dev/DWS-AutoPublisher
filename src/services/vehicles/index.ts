@@ -1,9 +1,28 @@
 import "server-only";
-import type { Vehicle } from "@/db/types/database";
+import type {
+  Vehicle,
+  VehicleStatus,
+  VehicleVisibility,
+} from "@/db/types/database";
 import type { VehicleInput } from "@/lib/validation/vehicle";
 import { getCompanyScope } from "./scope";
 
 // Vehicle services
+
+export type ListVehiclesOptions = {
+  search?: string;
+  status?: VehicleStatus;
+  visibility?: VehicleVisibility;
+};
+
+// Strip characters that are structural in PostgREST filters (or wildcards) so a
+// search term cannot break out of or inject into the query.
+function sanitizeSearchTerm(term: string): string {
+  return term
+    .replace(/[,()*%:\\"']/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 function toRow(input: VehicleInput) {
   return {
@@ -22,12 +41,32 @@ function toRow(input: VehicleInput) {
   };
 }
 
-export async function listVehicles(): Promise<Vehicle[]> {
+export async function listVehicles(
+  options: ListVehiclesOptions = {},
+): Promise<Vehicle[]> {
   const { supabase, companyId } = await getCompanyScope();
-  const { data, error } = await supabase
+
+  let query = supabase
     .from("vehicles")
     .select("*")
-    .eq("company_id", companyId)
+    .eq("company_id", companyId);
+
+  if (options.status) {
+    query = query.eq("status", options.status);
+  }
+  if (options.visibility) {
+    query = query.eq("visibility", options.visibility);
+  }
+
+  const term = options.search ? sanitizeSearchTerm(options.search) : "";
+  if (term) {
+    const pattern = `%${term}%`;
+    query = query.or(
+      `title.ilike.${pattern},brand.ilike.${pattern},model.ilike.${pattern}`,
+    );
+  }
+
+  const { data, error } = await query
     .order("updated_at", { ascending: false })
     .returns<Vehicle[]>();
 

@@ -8,7 +8,7 @@ type NavItem = {
 
 const NAV_ITEMS: NavItem[] = [
   { label: "Panel", href: "/dashboard", enabled: true },
-  { label: "Vehículos", href: "/vehicles", enabled: false },
+  { label: "Vehículos", href: "/dashboard/vehicles", enabled: true },
   { label: "Grupos", href: "/groups", enabled: false },
   { label: "Publicaciones", href: "/publications", enabled: false },
   { label: "Historial", href: "/history", enabled: false },
