@@ -7,8 +7,6 @@ export type CurrentProfile = {
   company: Company;
 };
 
-// Loads the authenticated user's profile together with their company.
-// Returns null when there is no session or no linked profile.
 export async function getCurrentProfile(): Promise<CurrentProfile | null> {
   const supabase = await createClient();
 

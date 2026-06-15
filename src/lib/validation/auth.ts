@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 // Validation
-// User-facing messages are in Spanish; field names stay in English.
 
 export const loginSchema = z.object({
   email: z.string().email("Ingresa un correo electrónico válido."),

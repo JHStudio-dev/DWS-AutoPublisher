@@ -73,7 +73,7 @@ export async function requestPasswordResetAction(
     return { status: "error", message: authErrorMessage(error) };
   }
 
-  // Neutral confirmation avoids revealing whether the email exists.
+  // Neutral message avoids revealing whether the email exists.
   return {
     status: "success",
     message:
@@ -98,9 +98,7 @@ export async function signUpAction(
     };
   }
 
-  // Registration is invite-oriented in this phase: accounts are linked to a
-  // company by an administrator. The validated input matches the shape an
-  // invite flow will consume once it is wired.
+  // Invite-oriented: accounts are provisioned by an administrator, not self-signup.
   return {
     status: "success",
     message:

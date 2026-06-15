@@ -1,8 +1,6 @@
 import type { AuthError } from "@supabase/supabase-js";
 
 // Errors
-// Failures are mapped to safe Spanish messages for the UI. Raw provider errors
-// are never shown to users.
 
 export const GENERIC_ERROR_MESSAGE =
   "Ocurrió un error inesperado. Vuelve a intentarlo.";

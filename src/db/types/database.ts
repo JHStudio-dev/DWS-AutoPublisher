@@ -1,6 +1,4 @@
-// Database types
-// Hand-maintained to match src/db/migrations. Generate from Supabase once the
-// project database is provisioned; extend with more row types as features land.
+// Hand-maintained to match src/db/migrations until generated from Supabase.
 
 export type UserRole = "owner" | "admin" | "staff";
 

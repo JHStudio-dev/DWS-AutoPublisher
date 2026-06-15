@@ -1,6 +1,4 @@
--- Initial schema for DWS PublishFlow
--- Companies, profiles, vehicles, groups, publications, targets, logs, and jobs.
--- RLS is enabled separately in 0002_rls_policies.sql.
+-- Initial schema. RLS is enabled separately in 0002_rls_policies.sql.
 
 create extension if not exists pgcrypto;
 

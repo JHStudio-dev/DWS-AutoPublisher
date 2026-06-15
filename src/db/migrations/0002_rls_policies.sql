@@ -1,7 +1,5 @@
--- Row Level Security for DWS PublishFlow
--- Every table is isolated by company. The caller's company is resolved from
--- their profile via current_company_id(). Policies target authenticated users;
--- the anon role gets no access.
+-- Row Level Security: every table is isolated by company via current_company_id().
+-- Policies target authenticated users; the anon role gets no access.
 
 -- Helpers
 
@@ -46,9 +44,8 @@ create policy companies_admin_update
   using (id = public.current_company_id() and public.current_user_is_admin())
   with check (id = public.current_company_id() and public.current_user_is_admin());
 
--- Profiles: read own row, or any company member if admin.
--- Inserts/updates are handled server-side (admin client) in this phase, so no
--- write policies are exposed to end users yet.
+-- Profiles: read own row, or any company member if admin. Writes are handled
+-- server-side (admin client) in this phase.
 
 alter table public.profiles enable row level security;
 

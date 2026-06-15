@@ -3,7 +3,7 @@ import { requireProfile } from "@/lib/auth/session";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 import { DashboardTopbar } from "@/components/layout/dashboard-topbar";
 
-// The dashboard is per-user and auth-gated, so it is always rendered on request.
+// Per-user and auth-gated: always rendered on request.
 export const dynamic = "force-dynamic";
 
 export default async function DashboardLayout({
