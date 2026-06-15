@@ -72,3 +72,32 @@ export type Profile = {
   created_at: string;
   updated_at: string;
 };
+
+export type Vehicle = {
+  id: string;
+  company_id: string;
+  title: string;
+  brand: string;
+  model: string;
+  year: number;
+  price: number;
+  mileage: number | null;
+  transmission: string | null;
+  fuel_type: string | null;
+  color: string | null;
+  description: string | null;
+  status: VehicleStatus;
+  visibility: VehicleVisibility;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type VehicleImage = {
+  id: string;
+  vehicle_id: string;
+  storage_path: string;
+  public_url: string | null;
+  sort_order: number;
+  created_at: string;
+};
