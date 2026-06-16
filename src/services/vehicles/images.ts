@@ -1,7 +1,7 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
 import type { VehicleImage } from "@/db/types/database";
-import { getCompanyScope } from "./scope";
+import { getCompanyScope } from "@/services/company-scope";
 
 // Vehicle images
 // Read and display helpers. Upload is handled in a later increment; paths are

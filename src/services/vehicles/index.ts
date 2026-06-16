@@ -5,7 +5,7 @@ import type {
   VehicleVisibility,
 } from "@/db/types/database";
 import type { VehicleInput } from "@/lib/validation/vehicle";
-import { getCompanyScope } from "./scope";
+import { getCompanyScope } from "@/services/company-scope";
 
 // Vehicle services
 
