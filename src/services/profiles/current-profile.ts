@@ -22,12 +22,17 @@ export async function getCurrentProfile(): Promise<CurrentProfile | null> {
     .from("profiles")
     .select("*, company:companies(*)")
     .eq("auth_user_id", user.id)
-    .single<Profile & { company: Company }>();
+    .maybeSingle<Profile & { company: Company | null }>();
 
   if (error || !data) {
     return null;
   }
 
   const { company, ...profile } = data;
+
+  if (!company) {
+    return null;
+  }
+
   return { profile, company };
 }
