@@ -101,3 +101,15 @@ export type VehicleImage = {
   sort_order: number;
   created_at: string;
 };
+
+export type PublicationGroup = {
+  id: string;
+  company_id: string;
+  name: string;
+  url: string;
+  platform: GroupPlatform;
+  active: boolean;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+};
