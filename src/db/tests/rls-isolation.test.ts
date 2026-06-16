@@ -199,3 +199,33 @@ describe("anonymous (unauthenticated) access is denied", () => {
     ).rejects.toThrow();
   });
 });
+
+describe("vehicle and vehicle_images write isolation", () => {
+  it("cannot update another company's vehicle image", async () => {
+    const result = await h.asUser(
+      h.ids.ownerA,
+      "update public.vehicle_images set storage_path = 'x/x.jpg' where id = $1",
+      [h.ids.imageB],
+    );
+    expect(result.affectedRows).toBe(0);
+  });
+
+  it("cannot delete another company's vehicle image", async () => {
+    const result = await h.asUser(
+      h.ids.ownerA,
+      "delete from public.vehicle_images where id = $1",
+      [h.ids.imageB],
+    );
+    expect(result.affectedRows).toBe(0);
+  });
+
+  it("rejects re-parenting its own vehicle to another company", async () => {
+    await expect(
+      h.asUser(
+        h.ids.ownerA,
+        "update public.vehicles set company_id = $1 where id = $2",
+        [h.ids.companyB, h.ids.vehicleA],
+      ),
+    ).rejects.toThrow();
+  });
+});
