@@ -9,7 +9,11 @@ type NavItem = {
 const NAV_ITEMS: NavItem[] = [
   { label: "Panel", href: "/dashboard", enabled: true },
   { label: "Vehículos", href: "/dashboard/vehicles", enabled: true },
-  { label: "Grupos", href: "/groups", enabled: false },
+  {
+    label: "Grupos de publicación",
+    href: "/dashboard/publication-groups",
+    enabled: true,
+  },
   { label: "Publicaciones", href: "/publications", enabled: false },
   { label: "Historial", href: "/history", enabled: false },
   { label: "Configuración", href: "/settings", enabled: false },
