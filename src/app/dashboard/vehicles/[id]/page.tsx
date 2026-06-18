@@ -86,7 +86,13 @@ export default async function VehicleDetailPage({
         </p>
       </header>
 
-      <div className="dws-vehicle-detail__actions-wrap mt-6">
+      <div className="dws-vehicle-detail__actions-wrap mt-6 space-y-3">
+        <Link
+          href={`/dashboard/vehicles/${vehicle.id}/publish`}
+          className="dws-vehicle-detail__publish inline-block rounded-md bg-primary px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-primary-hover"
+        >
+          Preparar publicación
+        </Link>
         <VehicleActions vehicleId={vehicle.id} />
       </div>
 
