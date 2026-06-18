@@ -113,3 +113,36 @@ export type PublicationGroup = {
   created_at: string;
   updated_at: string;
 };
+
+export type Publication = {
+  id: string;
+  company_id: string;
+  vehicle_id: string;
+  status: PublicationStatus;
+  publication_text: string;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type PublicationTarget = {
+  id: string;
+  publication_id: string;
+  group_id: string;
+  status: PublicationTargetStatus;
+  target_url: string | null;
+  published_at: string | null;
+  error_message: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type PublicationLog = {
+  id: string;
+  publication_id: string;
+  target_id: string | null;
+  level: PublicationLogLevel;
+  message: string;
+  metadata: Record<string, unknown> | null;
+  created_at: string;
+};
