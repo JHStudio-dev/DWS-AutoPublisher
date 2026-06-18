@@ -229,3 +229,33 @@ describe("vehicle and vehicle_images write isolation", () => {
     ).rejects.toThrow();
   });
 });
+
+describe("publication_groups write isolation", () => {
+  it("rejects inserting a group into another company", async () => {
+    await expect(
+      h.asUser(
+        h.ids.ownerA,
+        "insert into public.publication_groups (company_id, name, url) values ($1, 'x', 'https://example.com/x')",
+        [h.ids.companyB],
+      ),
+    ).rejects.toThrow();
+  });
+
+  it("cannot update another company's group", async () => {
+    const result = await h.asUser(
+      h.ids.ownerA,
+      "update public.publication_groups set name = 'hacked' where id = $1",
+      [h.ids.groupB],
+    );
+    expect(result.affectedRows).toBe(0);
+  });
+
+  it("cannot delete another company's group", async () => {
+    const result = await h.asUser(
+      h.ids.ownerA,
+      "delete from public.publication_groups where id = $1",
+      [h.ids.groupB],
+    );
+    expect(result.affectedRows).toBe(0);
+  });
+});
