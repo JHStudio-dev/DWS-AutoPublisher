@@ -14,7 +14,7 @@ const NAV_ITEMS: NavItem[] = [
     href: "/dashboard/publication-groups",
     enabled: true,
   },
-  { label: "Publicaciones", href: "/publications", enabled: false },
+  { label: "Publicaciones", href: "/dashboard/publications", enabled: true },
   { label: "Historial", href: "/history", enabled: false },
   { label: "Configuración", href: "/settings", enabled: false },
 ];
