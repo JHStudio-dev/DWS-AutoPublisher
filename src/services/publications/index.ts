@@ -14,6 +14,7 @@ import type {
   TargetUpdateInput,
 } from "@/lib/validation/publication";
 import { PUBLICATION_TARGET_STATUS_LABELS } from "@/lib/constants/publications";
+import { derivePublicationStatus } from "@/lib/publications/status";
 import { getCompanyScope, type CompanyScope } from "@/services/company-scope";
 
 // Publication services
@@ -41,28 +42,6 @@ export type PublicationDetail = Publication & {
 export type ListPublicationsOptions = {
   status?: PublicationStatus;
 };
-
-export function derivePublicationStatus(
-  targets: { status: PublicationTargetStatus }[],
-): PublicationStatus {
-  if (targets.length === 0) {
-    return "pending";
-  }
-  const inProgress = targets.some(
-    (target) =>
-      target.status === "pending" || target.status === "requires_review",
-  );
-  if (inProgress) {
-    return "pending";
-  }
-  if (targets.every((target) => target.status === "cancelled")) {
-    return "cancelled";
-  }
-  if (targets.some((target) => target.status === "failed")) {
-    return "failed";
-  }
-  return "completed";
-}
 
 function statusLogLevel(status: PublicationTargetStatus): PublicationLogLevel {
   if (status === "completed") return "success";

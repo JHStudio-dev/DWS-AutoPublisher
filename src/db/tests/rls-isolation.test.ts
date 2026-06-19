@@ -259,3 +259,42 @@ describe("publication_groups write isolation", () => {
     expect(result.affectedRows).toBe(0);
   });
 });
+
+describe("publication write isolation", () => {
+  it("rejects inserting a publication into another company", async () => {
+    await expect(
+      h.asUser(
+        h.ids.ownerA,
+        "insert into public.publications (company_id, vehicle_id) values ($1, $2)",
+        [h.ids.companyB, h.ids.vehicleB],
+      ),
+    ).rejects.toThrow();
+  });
+
+  it("cannot update another company's publication", async () => {
+    const result = await h.asUser(
+      h.ids.ownerA,
+      "update public.publications set status = 'completed' where id = $1",
+      [h.ids.publicationB],
+    );
+    expect(result.affectedRows).toBe(0);
+  });
+
+  it("cannot delete another company's publication", async () => {
+    const result = await h.asUser(
+      h.ids.ownerA,
+      "delete from public.publications where id = $1",
+      [h.ids.publicationB],
+    );
+    expect(result.affectedRows).toBe(0);
+  });
+
+  it("cannot update another company's publication target", async () => {
+    const result = await h.asUser(
+      h.ids.ownerA,
+      "update public.publication_targets set status = 'completed' where id = $1",
+      [h.ids.targetB],
+    );
+    expect(result.affectedRows).toBe(0);
+  });
+});
