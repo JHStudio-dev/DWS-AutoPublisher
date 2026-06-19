@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type NavItem = {
   label: string;
@@ -19,7 +22,16 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Configuración", href: "/settings", enabled: false },
 ];
 
+function isActivePath(pathname: string, href: string): boolean {
+  if (href === "/dashboard") {
+    return pathname === "/dashboard";
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function DashboardSidebar({ companyName }: { companyName: string }) {
+  const pathname = usePathname();
+
   return (
     <aside className="dws-sidebar border-b border-border bg-surface p-4 md:min-h-screen md:border-b-0 md:border-r">
       <div className="dws-sidebar__brand mb-6 flex items-center gap-2">
@@ -38,25 +50,34 @@ export function DashboardSidebar({ companyName }: { companyName: string }) {
 
       <nav className="dws-sidebar__nav" aria-label="Navegación principal">
         <ul className="dws-sidebar__list space-y-1">
-          {NAV_ITEMS.map((item) => (
-            <li key={item.href} className="dws-sidebar__item">
-              {item.enabled ? (
-                <Link
-                  href={item.href}
-                  className="dws-sidebar__link block rounded-md px-3 py-2 text-sm text-text transition-colors hover:bg-surface-muted"
-                >
-                  {item.label}
-                </Link>
-              ) : (
-                <span className="dws-sidebar__link dws-sidebar__link--disabled flex items-center justify-between rounded-md px-3 py-2 text-sm text-text-muted">
-                  {item.label}
-                  <span className="dws-sidebar__badge text-[10px] uppercase tracking-wide text-accent">
-                    Pronto
+          {NAV_ITEMS.map((item) => {
+            const active = item.enabled && isActivePath(pathname, item.href);
+
+            return (
+              <li key={item.href} className="dws-sidebar__item">
+                {item.enabled ? (
+                  <Link
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`dws-sidebar__link block rounded-md px-3 py-2 text-sm transition-colors ${
+                      active
+                        ? "dws-sidebar__link--active bg-surface-muted font-medium text-text"
+                        : "text-text hover:bg-surface-muted"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <span className="dws-sidebar__link dws-sidebar__link--disabled flex items-center justify-between rounded-md px-3 py-2 text-sm text-text-muted">
+                    {item.label}
+                    <span className="dws-sidebar__badge text-[10px] uppercase tracking-wide text-accent">
+                      Pronto
+                    </span>
                   </span>
-                </span>
-              )}
-            </li>
-          ))}
+                )}
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </aside>
