@@ -15,11 +15,65 @@
   --color-warning: var(--dws-color-warning);
 }
 
+@theme {
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
+
+  --radius-card: 0.875rem;
+
+  /* Shadows are tinted for the dark theme: soft black depth plus a red glow
+     reserved for primary surfaces. */
+  --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.45),
+    0 12px 28px -16px rgb(0 0 0 / 0.7);
+  --shadow-elevated: 0 1px 2px 0 rgb(0 0 0 / 0.5),
+    0 24px 56px -24px rgb(0 0 0 / 0.85);
+  --shadow-primary: 0 10px 30px -12px rgb(209 31 42 / 0.45);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
+  font-family: var(--font-sans);
   background-color: var(--dws-color-background);
   color: var(--dws-color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--dws-color-primary) 35%, transparent);
+  color: var(--dws-color-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--dws-color-primary);
+  outline-offset: 2px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--dws-color-border) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--dws-color-border);
+  border: 2px solid var(--dws-color-background);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dws-color-text-muted);
 }
