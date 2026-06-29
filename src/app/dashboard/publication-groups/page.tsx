@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { listGroups } from "@/services/publication-groups";
 import { GROUP_PLATFORMS } from "@/lib/constants/publication-groups";
 import type { GroupPlatform } from "@/db/types/database";
+import { IconPlus } from "@/components/ui/icons";
 import { GroupCard } from "@/components/publication-groups/group-card";
 import { GroupFilters } from "@/components/publication-groups/group-filters";
 
@@ -51,7 +52,7 @@ export default async function PublicationGroupsPage({
     <section className="dws-groups">
       <header className="dws-groups__header flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="dws-groups__title text-2xl font-semibold text-text">
+          <h1 className="dws-groups__title text-2xl font-semibold tracking-tight text-text">
             Grupos de publicación
           </h1>
           <p className="dws-groups__subtitle mt-1 text-sm text-text-muted">
@@ -60,9 +61,12 @@ export default async function PublicationGroupsPage({
         </div>
         <Link
           href="/dashboard/publication-groups/new"
-          className="dws-groups__create rounded-md bg-primary px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-primary-hover"
+          className="dws-groups__create group inline-flex items-center gap-2 rounded-lg bg-primary py-2 pl-4 pr-2 text-sm font-medium text-text shadow-primary transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-primary-hover active:scale-[0.98]"
         >
-          Agregar grupo
+          <span>Agregar grupo</span>
+          <span className="grid h-6 w-6 place-items-center rounded-md bg-black/20 transition-transform duration-200 group-hover:translate-x-0.5">
+            <IconPlus className="h-4 w-4" />
+          </span>
         </Link>
       </header>
 
@@ -75,23 +79,23 @@ export default async function PublicationGroupsPage({
       </div>
 
       {groups.length === 0 ? (
-        <div className="dws-groups__empty mt-8 rounded-lg border border-border bg-surface p-8 text-center">
-          <p className="dws-groups__empty-text text-text">
+        <div className="dws-groups__empty mt-6 grid place-items-center rounded-card border border-dashed border-border bg-surface p-12 text-center">
+          <p className="dws-groups__empty-text text-sm text-text-muted">
             {hasFilters
               ? "No se encontraron grupos con los filtros aplicados."
-              : "No hay grupos registrados."}
+              : "Aún no hay grupos registrados."}
           </p>
           {hasFilters ? (
             <Link
               href="/dashboard/publication-groups"
-              className="dws-groups__empty-action mt-2 inline-block text-sm text-accent"
+              className="dws-groups__empty-action mt-2 inline-block text-sm font-medium text-primary transition-colors hover:text-primary-hover"
             >
               Limpiar filtros
             </Link>
           ) : (
             <Link
               href="/dashboard/publication-groups/new"
-              className="dws-groups__empty-action mt-2 inline-block text-sm text-accent"
+              className="dws-groups__empty-action mt-2 inline-block text-sm font-medium text-primary transition-colors hover:text-primary-hover"
             >
               Agregar el primer grupo
             </Link>
