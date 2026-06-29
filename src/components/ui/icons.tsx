@@ -207,6 +207,16 @@ export function IconUpload(props: IconProps) {
   );
 }
 
+export function IconExternal(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M14 4.5h5.5V10" />
+      <path d="M19.5 4.5 11 13" />
+      <path d="M18.5 14v4A1.5 1.5 0 0 1 17 19.5H6A1.5 1.5 0 0 1 4.5 18V7A1.5 1.5 0 0 1 6 5.5h4" />
+    </Icon>
+  );
+}
+
 export function IconMenu(props: IconProps) {
   return (
     <Icon {...props}>

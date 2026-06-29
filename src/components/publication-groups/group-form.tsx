@@ -8,6 +8,7 @@ import {
   GROUP_PLATFORMS,
   GROUP_PLATFORM_LABELS,
 } from "@/lib/constants/publication-groups";
+import { Panel } from "@/components/ui/panel";
 import { TextField } from "@/components/ui/text-field";
 import { TextareaField } from "@/components/ui/textarea-field";
 import { SelectField } from "@/components/ui/select-field";
@@ -46,49 +47,53 @@ export function GroupForm({
   ];
 
   return (
-    <form action={formAction} className="dws-group-form space-y-6" noValidate>
+    <form action={formAction} className="dws-group-form space-y-4" noValidate>
       <FormAlert state={state} />
 
       {group ? <input type="hidden" name="id" value={group.id} /> : null}
 
-      <div className="dws-group-form__grid grid gap-4 sm:grid-cols-2">
-        <TextField
-          label="Nombre"
-          name="name"
-          defaultValue={group?.name ?? ""}
-          required
-          maxLength={80}
-        />
-        <TextField
-          label="URL"
-          name="url"
-          type="url"
-          inputMode="url"
-          placeholder="https://..."
-          defaultValue={group?.url ?? ""}
-          required
-        />
-        <SelectField
-          label="Plataforma"
-          name="platform"
-          options={platformOptions}
-          defaultValue={group?.platform ?? "facebook_group"}
-        />
-        <SelectField
-          label="Estado"
-          name="active"
-          options={activeOptions}
-          defaultValue={group ? String(group.active) : "true"}
-        />
-      </div>
+      <Panel title="Datos del grupo">
+        <div className="dws-group-form__grid grid gap-4 sm:grid-cols-2">
+          <TextField
+            label="Nombre"
+            name="name"
+            defaultValue={group?.name ?? ""}
+            required
+            maxLength={80}
+          />
+          <TextField
+            label="URL"
+            name="url"
+            type="url"
+            inputMode="url"
+            placeholder="https://..."
+            defaultValue={group?.url ?? ""}
+            required
+          />
+          <SelectField
+            label="Plataforma"
+            name="platform"
+            options={platformOptions}
+            defaultValue={group?.platform ?? "facebook_group"}
+          />
+          <SelectField
+            label="Estado"
+            name="active"
+            options={activeOptions}
+            defaultValue={group ? String(group.active) : "true"}
+          />
+        </div>
+      </Panel>
 
-      <TextareaField
-        label="Notas"
-        name="notes"
-        rows={4}
-        maxLength={500}
-        defaultValue={group?.notes ?? ""}
-      />
+      <Panel title="Notas">
+        <TextareaField
+          label="Notas"
+          name="notes"
+          rows={4}
+          maxLength={500}
+          defaultValue={group?.notes ?? ""}
+        />
+      </Panel>
 
       <div className="dws-group-form__actions flex flex-wrap items-center gap-3">
         <SubmitButton pendingLabel={pendingLabel} fullWidth={false}>
