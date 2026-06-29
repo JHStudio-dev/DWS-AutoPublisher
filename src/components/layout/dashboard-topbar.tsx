@@ -1,38 +1,35 @@
-import { signOutAction } from "@/services/auth/actions";
-import type { UserRole } from "@/db/types/database";
+"use client";
 
-const ROLE_LABELS: Record<UserRole, string> = {
-  owner: "Propietario",
-  admin: "Administrador",
-  staff: "Personal",
-};
+import Link from "next/link";
+import { IconMenu, IconPlus } from "@/components/ui/icons";
 
-type DashboardTopbarProps = {
-  fullName: string | null;
-  email: string;
-  role: UserRole;
-};
-
-export function DashboardTopbar({ fullName, email, role }: DashboardTopbarProps) {
+export function DashboardTopbar({ onMenuClick }: { onMenuClick: () => void }) {
   return (
-    <header className="dws-topbar flex items-center justify-between border-b border-border bg-surface px-6 py-3">
-      <div className="dws-topbar__user">
-        <p className="dws-topbar__name text-sm font-medium text-text">
-          {fullName ?? email}
-        </p>
-        <p className="dws-topbar__role text-xs text-text-muted">
-          {ROLE_LABELS[role]}
-        </p>
+    <header className="dws-topbar sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-surface/80 px-4 py-3 backdrop-blur sm:px-6">
+      <button
+        type="button"
+        onClick={onMenuClick}
+        aria-label="Abrir menú"
+        className="dws-topbar__menu grid h-9 w-9 place-items-center rounded-md border border-border text-text-muted transition-colors hover:text-text md:hidden"
+      >
+        <IconMenu className="h-5 w-5" />
+      </button>
+
+      <div className="dws-topbar__brand text-sm font-semibold tracking-tight text-text md:hidden">
+        <span className="text-primary">DWS</span> PublishFlow
       </div>
 
-      <form action={signOutAction}>
-        <button
-          type="submit"
-          className="dws-topbar__logout rounded-md border border-border px-3 py-1.5 text-sm text-text transition-colors hover:bg-surface-muted"
-        >
-          Cerrar sesión
-        </button>
-      </form>
+      <div className="dws-topbar__spacer flex-1" />
+
+      <Link
+        href="/dashboard/publications/new"
+        className="dws-topbar__cta group inline-flex items-center gap-2 rounded-lg bg-primary py-2 pl-4 pr-2 text-sm font-medium text-text shadow-primary transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-primary-hover active:scale-[0.98]"
+      >
+        <span>Nueva publicación</span>
+        <span className="dws-topbar__cta-icon grid h-6 w-6 place-items-center rounded-md bg-black/20 transition-transform duration-200 group-hover:translate-x-0.5">
+          <IconPlus className="h-4 w-4" />
+        </span>
+      </Link>
     </header>
   );
 }
