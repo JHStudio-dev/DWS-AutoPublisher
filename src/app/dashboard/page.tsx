@@ -11,7 +11,7 @@ import {
   IconPublications,
   IconSend,
 } from "@/components/ui/icons";
-import { Panel } from "@/components/dashboard/panel";
+import { Panel } from "@/components/ui/panel";
 import { MetricCard } from "@/components/dashboard/metric-card";
 import { ActivityChart } from "@/components/dashboard/activity-chart";
 import { StatusDonut } from "@/components/dashboard/status-donut";

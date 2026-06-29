@@ -185,6 +185,28 @@ export function IconPlus(props: IconProps) {
   );
 }
 
+export function IconTrash(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 6.5h16" />
+      <path d="M9.5 6.5V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v1.5" />
+      <path d="M6.6 6.5 7.4 19a1.5 1.5 0 0 0 1.5 1.4h6.2a1.5 1.5 0 0 0 1.5-1.4l.8-12.5" />
+      <path d="M10 10.5v5" />
+      <path d="M14 10.5v5" />
+    </Icon>
+  );
+}
+
+export function IconUpload(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M12 15.5V4.5" />
+      <path d="M8 8.5 12 4.5l4 4" />
+      <path d="M5 14.5v3A1.5 1.5 0 0 0 6.5 19h11a1.5 1.5 0 0 0 1.5-1.5v-3" />
+    </Icon>
+  );
+}
+
 export function IconMenu(props: IconProps) {
   return (
     <Icon {...props}>

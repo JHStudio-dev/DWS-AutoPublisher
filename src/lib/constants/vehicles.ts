@@ -1,4 +1,5 @@
 import type { VehicleStatus, VehicleVisibility } from "@/db/types/database";
+import type { StatusTone } from "@/components/ui/status-pill";
 
 export const VEHICLE_STATUSES = [
   "draft",
@@ -18,6 +19,13 @@ export const VEHICLE_STATUS_LABELS: Record<VehicleStatus, string> = {
   ready: "Listo",
   published: "Publicado",
   archived: "Archivado",
+};
+
+export const VEHICLE_STATUS_TONES: Record<VehicleStatus, StatusTone> = {
+  draft: "muted",
+  ready: "accent",
+  published: "success",
+  archived: "neutral",
 };
 
 export const VEHICLE_VISIBILITY_LABELS: Record<VehicleVisibility, string> = {
