@@ -10,6 +10,7 @@ import {
   VEHICLE_VISIBILITIES,
   VEHICLE_VISIBILITY_LABELS,
 } from "@/lib/constants/vehicles";
+import { Panel } from "@/components/ui/panel";
 import { TextField } from "@/components/ui/text-field";
 import { TextareaField } from "@/components/ui/textarea-field";
 import { SelectField } from "@/components/ui/select-field";
@@ -48,98 +49,111 @@ export function VehicleForm({
   }));
 
   return (
-    <form action={formAction} className="dws-vehicle-form space-y-6" noValidate>
+    <form action={formAction} className="dws-vehicle-form space-y-4" noValidate>
       <FormAlert state={state} />
 
       {vehicle ? <input type="hidden" name="id" value={vehicle.id} /> : null}
 
-      <div className="dws-vehicle-form__grid grid gap-4 sm:grid-cols-2">
-        <TextField
-          label="Título"
-          name="title"
-          defaultValue={vehicle?.title ?? ""}
-          required
-          maxLength={120}
-        />
-        <TextField
-          label="Marca"
-          name="brand"
-          defaultValue={vehicle?.brand ?? ""}
-          required
-          maxLength={60}
-        />
-        <TextField
-          label="Modelo"
-          name="model"
-          defaultValue={vehicle?.model ?? ""}
-          required
-          maxLength={60}
-        />
-        <TextField
-          label="Año"
-          name="year"
-          type="number"
-          inputMode="numeric"
-          defaultValue={vehicle ? String(vehicle.year) : ""}
-          required
-        />
-        <TextField
-          label="Precio"
-          name="price"
-          type="number"
-          inputMode="decimal"
-          step="0.01"
-          min="0"
-          defaultValue={vehicle ? String(vehicle.price) : ""}
-          required
-        />
-        <TextField
-          label="Kilometraje"
-          name="mileage"
-          type="number"
-          inputMode="numeric"
-          min="0"
-          defaultValue={vehicle?.mileage != null ? String(vehicle.mileage) : ""}
-        />
-        <TextField
-          label="Transmisión"
-          name="transmission"
-          defaultValue={vehicle?.transmission ?? ""}
-          maxLength={40}
-        />
-        <TextField
-          label="Combustible"
-          name="fuel_type"
-          defaultValue={vehicle?.fuel_type ?? ""}
-          maxLength={40}
-        />
-        <TextField
-          label="Color"
-          name="color"
-          defaultValue={vehicle?.color ?? ""}
-          maxLength={40}
-        />
-        <SelectField
-          label="Estado"
-          name="status"
-          options={statusOptions}
-          defaultValue={vehicle?.status ?? "draft"}
-        />
-        <SelectField
-          label="Visibilidad"
-          name="visibility"
-          options={visibilityOptions}
-          defaultValue={vehicle?.visibility ?? "internal_only"}
-        />
-      </div>
+      <Panel title="Datos del vehículo">
+        <div className="space-y-4">
+          <TextField
+            label="Título"
+            name="title"
+            defaultValue={vehicle?.title ?? ""}
+            required
+            maxLength={120}
+          />
+          <div className="dws-vehicle-form__grid grid gap-4 sm:grid-cols-2">
+            <TextField
+              label="Marca"
+              name="brand"
+              defaultValue={vehicle?.brand ?? ""}
+              required
+              maxLength={60}
+            />
+            <TextField
+              label="Modelo"
+              name="model"
+              defaultValue={vehicle?.model ?? ""}
+              required
+              maxLength={60}
+            />
+            <TextField
+              label="Año"
+              name="year"
+              type="number"
+              inputMode="numeric"
+              defaultValue={vehicle ? String(vehicle.year) : ""}
+              required
+            />
+            <TextField
+              label="Precio"
+              name="price"
+              type="number"
+              inputMode="decimal"
+              step="0.01"
+              min="0"
+              defaultValue={vehicle ? String(vehicle.price) : ""}
+              required
+            />
+            <TextField
+              label="Kilometraje"
+              name="mileage"
+              type="number"
+              inputMode="numeric"
+              min="0"
+              defaultValue={
+                vehicle?.mileage != null ? String(vehicle.mileage) : ""
+              }
+            />
+            <TextField
+              label="Transmisión"
+              name="transmission"
+              defaultValue={vehicle?.transmission ?? ""}
+              maxLength={40}
+            />
+            <TextField
+              label="Combustible"
+              name="fuel_type"
+              defaultValue={vehicle?.fuel_type ?? ""}
+              maxLength={40}
+            />
+            <TextField
+              label="Color"
+              name="color"
+              defaultValue={vehicle?.color ?? ""}
+              maxLength={40}
+            />
+          </div>
+        </div>
+      </Panel>
 
-      <TextareaField
-        label="Descripción"
-        name="description"
-        rows={5}
-        maxLength={2000}
-        defaultValue={vehicle?.description ?? ""}
-      />
+      <Panel title="Descripción">
+        <TextareaField
+          label="Descripción"
+          name="description"
+          rows={5}
+          maxLength={2000}
+          defaultValue={vehicle?.description ?? ""}
+        />
+      </Panel>
+
+      <Panel title="Estado y visibilidad">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <SelectField
+            label="Estado"
+            name="status"
+            options={statusOptions}
+            defaultValue={vehicle?.status ?? "draft"}
+          />
+          <SelectField
+            label="Visibilidad"
+            name="visibility"
+            options={visibilityOptions}
+            defaultValue={vehicle?.visibility ?? "internal_only"}
+          />
+        </div>
+      </Panel>
 
       <div className="dws-vehicle-form__actions flex flex-wrap items-center gap-3">
         <SubmitButton pendingLabel={pendingLabel} fullWidth={false}>

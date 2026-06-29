@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { z } from "zod";
@@ -26,9 +27,16 @@ export default async function EditVehiclePage({
   }
 
   return (
-    <section className="dws-vehicle-form-page">
-      <header className="dws-vehicle-form-page__header">
-        <h1 className="dws-vehicle-form-page__title text-2xl font-semibold text-text">
+    <section className="dws-vehicle-form-page mx-auto max-w-3xl">
+      <Link
+        href={`/dashboard/vehicles/${vehicle.id}`}
+        className="dws-vehicle-form-page__back inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
+      >
+        <span aria-hidden="true">←</span> Volver al vehículo
+      </Link>
+
+      <header className="dws-vehicle-form-page__header mt-4">
+        <h1 className="dws-vehicle-form-page__title text-2xl font-semibold tracking-tight text-text">
           Editar vehículo
         </h1>
         <p className="dws-vehicle-form-page__subtitle mt-1 text-sm text-text-muted">
