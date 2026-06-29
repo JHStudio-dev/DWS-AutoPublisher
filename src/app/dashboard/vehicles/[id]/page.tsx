@@ -10,7 +10,7 @@ import {
 } from "@/lib/constants/vehicles";
 import { formatDate, formatPrice } from "@/lib/formatting";
 import { VehicleActions } from "@/components/vehicles/vehicle-actions";
-import { VehicleGallery } from "@/components/vehicles/vehicle-gallery";
+import { VehicleImageManager } from "@/components/vehicles/vehicle-image-manager";
 
 export const metadata: Metadata = {
   title: "Vehículo · DWS PublishFlow",
@@ -101,7 +101,7 @@ export default async function VehicleDetailPage({
           Imágenes
         </h2>
         <div className="mt-3">
-          <VehicleGallery images={gallery} />
+          <VehicleImageManager vehicleId={vehicle.id} images={gallery} />
         </div>
       </section>
 

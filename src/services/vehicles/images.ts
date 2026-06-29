@@ -4,8 +4,8 @@ import type { VehicleImage } from "@/db/types/database";
 import { getCompanyScope } from "@/services/company-scope";
 
 // Vehicle images
-// Read and display helpers. Upload is handled in a later increment; paths are
-// always generated server-side and never trusted from the client.
+// Storage paths are always generated server-side and never trusted from the
+// client. Isolation is enforced both by table RLS and by the bucket policies.
 
 export const VEHICLE_IMAGES_BUCKET = "vehicle-images";
 
@@ -63,4 +63,58 @@ export async function getSignedImageUrl(
     return null;
   }
   return data.signedUrl;
+}
+
+export async function uploadVehicleImages(
+  vehicleId: string,
+  files: File[],
+): Promise<void> {
+  const { supabase, companyId } = await getCompanyScope();
+
+  const existing = await listVehicleImages(vehicleId);
+  let sortOrder =
+    existing.reduce((max, image) => Math.max(max, image.sort_order), -1) + 1;
+
+  for (const file of files) {
+    const path = buildVehicleImagePath(companyId, vehicleId, file.name);
+
+    const { error: uploadError } = await supabase.storage
+      .from(VEHICLE_IMAGES_BUCKET)
+      .upload(path, file, { contentType: file.type, upsert: false });
+    if (uploadError) throw uploadError;
+
+    const { error: insertError } = await supabase.from("vehicle_images").insert({
+      vehicle_id: vehicleId,
+      storage_path: path,
+      sort_order: sortOrder,
+    });
+    // A denied insert (vehicle outside the company) leaves an orphan object;
+    // remove it so a failed upload never lingers in storage.
+    if (insertError) {
+      await supabase.storage.from(VEHICLE_IMAGES_BUCKET).remove([path]);
+      throw insertError;
+    }
+
+    sortOrder += 1;
+  }
+}
+
+export async function deleteVehicleImage(imageId: string): Promise<void> {
+  const { supabase } = await getCompanyScope();
+
+  const { data, error } = await supabase
+    .from("vehicle_images")
+    .select("storage_path")
+    .eq("id", imageId)
+    .maybeSingle<{ storage_path: string }>();
+  if (error) throw error;
+  if (!data) throw new Error("Vehicle image not found.");
+
+  const { error: deleteError } = await supabase
+    .from("vehicle_images")
+    .delete()
+    .eq("id", imageId);
+  if (deleteError) throw deleteError;
+
+  await supabase.storage.from(VEHICLE_IMAGES_BUCKET).remove([data.storage_path]);
 }
