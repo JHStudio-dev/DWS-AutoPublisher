@@ -31,7 +31,7 @@ export function VehicleFilters({
   return (
     <form
       method="get"
-      className="dws-vehicles__filters grid gap-3 rounded-lg border border-border bg-surface p-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end"
+      className="dws-vehicles__filters grid gap-3 rounded-card border border-border bg-surface p-4 shadow-card sm:grid-cols-2 lg:grid-cols-[1fr_auto_auto_auto] lg:items-end"
     >
       <TextField
         label="Buscar"
@@ -57,7 +57,7 @@ export function VehicleFilters({
       <div className="dws-vehicles__filters-actions flex items-center gap-3">
         <button
           type="submit"
-          className="dws-vehicles__filters-submit rounded-md border border-border px-4 py-2 text-sm text-text transition-colors hover:bg-surface-muted"
+          className="dws-vehicles__filters-submit rounded-md bg-primary px-4 py-2 text-sm font-medium text-text transition-colors hover:bg-primary-hover active:scale-[0.98]"
         >
           Filtrar
         </button>
