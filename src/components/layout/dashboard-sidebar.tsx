@@ -19,7 +19,7 @@ const NAV_ITEMS: NavItem[] = [
   },
   { label: "Publicaciones", href: "/dashboard/publications", enabled: true },
   { label: "Historial", href: "/history", enabled: false },
-  { label: "Configuración", href: "/settings", enabled: false },
+  { label: "Configuración", href: "/dashboard/settings", enabled: true },
 ];
 
 function isActivePath(pathname: string, href: string): boolean {
